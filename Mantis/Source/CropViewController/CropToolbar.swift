@@ -27,10 +27,12 @@ class CropToolbar: UIView {
     var cropButton: UIButton?
     
     private var optionButtonStackView: UIStackView?
+    private var actionButtonStackView: UIStackView?
     
     private func createOptionButton(withTitle title: String?, andAction action: Selector) -> UIButton {
         let buttonColor = UIColor.white
-        let buttonFontSize: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad) ? 20 : 14
+//        let buttonFontSize: CGFloat = (UIDevice.current.userInterfaceIdiom == .pad) ? 20 : 17
+        let buttonFontSize: CGFloat = 20
         let buttonFont = UIFont.systemFont(ofSize: buttonFontSize)
         
         let button = UIButton(type: .system)
@@ -48,36 +50,36 @@ class CropToolbar: UIView {
         return button
     }
     
-    private func createCancelButton() {
-        let cancelText = LocalizedHelper.getString("Cancel")
+    private func createCancelButton(with cancelStr: String) {
+//        let cancelText = LocalizedHelper.getString("Cancel")
         
-        cancelButton = createOptionButton(withTitle: cancelText, andAction: #selector(cancel))
+        cancelButton = createOptionButton(withTitle: cancelStr, andAction: #selector(cancel))
     }
     
-    private func createRotationButton() {
+    private func createRotationButton(with image: UIImage?) {
         anticlockRotateButton = createOptionButton(withTitle: nil, andAction: #selector(rotate))
-        anticlockRotateButton?.setImage(ToolBarButtonImageBuilder.rotateCCWImage(), for: .normal)
+        anticlockRotateButton?.setImage(ToolBarButtonImageBuilder.rotateCCWImage(with: image), for: .normal)
     }
     
-    private func createResetButton(with image: UIImage? = nil) {
-        if let image = image {
-            resetButton = createOptionButton(withTitle: nil, andAction: #selector(reset))
-            resetButton?.setImage(image, for: .normal)
-        } else {
-            let resetText = LocalizedHelper.getString("Reset")
+    private func createResetButton(with image: UIImage? = nil, with resetStr: String) {
+//        if let image = image {
+//            resetButton = createOptionButton(withTitle: nil, andAction: #selector(reset))
+//            resetButton?.setImage(image, for: .normal)
+//        } else {
+//            let resetText = LocalizedHelper.getString("Reset")
 
-            resetButton = createOptionButton(withTitle: resetText, andAction: #selector(reset))
-        }
+            resetButton = createOptionButton(withTitle: resetStr, andAction: #selector(reset))
+//        }
     }
     
-    private func createSetRatioButton() {
+    private func createSetRatioButton(with image: UIImage?) {
         setRatioButton = createOptionButton(withTitle: nil, andAction: #selector(setRatio))
-        setRatioButton?.setImage(ToolBarButtonImageBuilder.clampImage(), for: .normal)
+        setRatioButton?.setImage(ToolBarButtonImageBuilder.clampImage(with: image), for: .normal)
     }
     
-    private func createCropButton() {
-        let doneText = LocalizedHelper.getString("Done")
-        cropButton = createOptionButton(withTitle: doneText, andAction: #selector(crop))
+    private func createCropButton(with doneStr: String) {
+//        let doneText = LocalizedHelper.getString("Done")
+        cropButton = createOptionButton(withTitle: doneStr, andAction: #selector(crop))
     }
     
     private func createButtonContainer() {
@@ -88,12 +90,31 @@ class CropToolbar: UIView {
         optionButtonStackView?.isLayoutMarginsRelativeArrangement = true
     }
     
+    private func createActionButtonContainer() {
+        actionButtonStackView = UIStackView()
+        addSubview(actionButtonStackView!)
+        
+        actionButtonStackView?.distribution = .equalSpacing
+        actionButtonStackView?.isLayoutMarginsRelativeArrangement = true
+    }
+    
     private func setButtonContainerLayout() {
         optionButtonStackView?.translatesAutoresizingMaskIntoConstraints = false
         optionButtonStackView?.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        optionButtonStackView?.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        if let customBottomAnchor = actionButtonStackView?.topAnchor {
+            optionButtonStackView?.bottomAnchor.constraint(equalTo: customBottomAnchor, constant: -15).isActive = true
+        } else {
+            optionButtonStackView?.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        }
         optionButtonStackView?.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         optionButtonStackView?.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
+    }
+    
+    private func setActionButtonContainerLayout() {
+        actionButtonStackView?.translatesAutoresizingMaskIntoConstraints = false
+        actionButtonStackView?.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        actionButtonStackView?.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
+        actionButtonStackView?.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
     }
     
     private func addButtonsToContainer(buttons: [UIButton?]) {
@@ -104,21 +125,39 @@ class CropToolbar: UIView {
         }
     }
     
-    func createToolbarUI(mode: CropToolbarMode = .normal) {
+    private func addActionButtonsToContainer(buttons: [UIButton?]) {
+        buttons.forEach{
+            if let button = $0 {
+                actionButtonStackView?.addArrangedSubview(button)
+            }
+        }
+    }
+    
+    func createToolbarUI(mode: CropToolbarMode = .normal,
+                         rotateButtonImage: UIImage?,
+                         clampButtonImage: UIImage?,
+                         doneStr: String,
+                         cancelStr: String,
+                         resetStr: String) {
         createButtonContainer()
+        createActionButtonContainer()
         setButtonContainerLayout()
+        setActionButtonContainerLayout()
 
-        createRotationButton()
-        createSetRatioButton()
+        createRotationButton(with: rotateButtonImage)
+        createSetRatioButton(with: clampButtonImage)
 
         if mode == .normal {
-            createResetButton(with: ToolBarButtonImageBuilder.resetImage())
-            createCancelButton()
-            createCropButton()
+            createResetButton(with: ToolBarButtonImageBuilder.resetImage(), with: resetStr)
+            createCancelButton(with: cancelStr)
+            createCropButton(with: doneStr)
             addButtonsToContainer(buttons: [cancelButton, anticlockRotateButton, resetButton, setRatioButton, cropButton])
         } else {
-            createResetButton()
+            createResetButton(with: nil, with: resetStr)
             addButtonsToContainer(buttons: [anticlockRotateButton, resetButton, setRatioButton])
+            createCancelButton(with: cancelStr)
+            createCropButton(with: doneStr)
+            addActionButtonsToContainer(buttons: [cancelButton, cropButton])
         }
     }
     
@@ -126,9 +165,13 @@ class CropToolbar: UIView {
         if UIApplication.shared.statusBarOrientation.isPortrait {
             optionButtonStackView?.axis = .horizontal
             optionButtonStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+            actionButtonStackView?.axis = .horizontal
+            actionButtonStackView?.layoutMargins = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         } else {
             optionButtonStackView?.axis = .vertical
             optionButtonStackView?.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
+            actionButtonStackView?.axis = .vertical
+            actionButtonStackView?.layoutMargins = UIEdgeInsets(top: 20, left: 0, bottom: 20, right: 0)
         }
     }
     

@@ -25,11 +25,22 @@ class RatioPresenter {
         self.ratios = ratios
     }
     
-    func present(by viewController: UIViewController, in sourceView: UIView) {
+    func present(by viewController: UIViewController, in sourceView: UIView,
+                 cancelStr: String,
+                 originalSizeStr: String,
+                 squareSizeStr: String) {
         let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
         for ratio in ratios {
-            let title = (type == .horizontal) ? ratio.nameH : ratio.nameV
+            var title = (type == .horizontal) ? ratio.nameH : ratio.nameV
+            
+            if title == "Original" {
+                title = originalSizeStr
+            }
+            
+            if title == "Square" {
+                title = squareSizeStr
+            }
             
             let action = UIAlertAction(title: title, style: .default) {[weak self] _ in
                 guard let self = self else { return }
@@ -46,8 +57,8 @@ class RatioPresenter {
             actionSheet.popoverPresentationController?.sourceRect = sourceView.bounds
         }
         
-        let cancelText = LocalizedHelper.getString("Cancel")
-        let cancelAction = UIAlertAction(title: cancelText, style: .cancel)
+//        let cancelText = LocalizedHelper.getString("Cancel")
+        let cancelAction = UIAlertAction(title: cancelStr, style: .cancel)
         actionSheet.addAction(cancelAction)
         
         viewController.present(actionSheet, animated: true)

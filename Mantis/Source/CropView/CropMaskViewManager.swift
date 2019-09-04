@@ -31,30 +31,30 @@ class CropMaskViewManager {
 
     func setup(in view: UIView) {
         setupOverlayView(in: view)
-        setupTranslucencyView(in: view)
+//        setupTranslucencyView(in: view)
     }
     
     func removeMaskViews() {
         dimmingView.removeFromSuperview()
-        visualEffectView.removeFromSuperview()
+//        visualEffectView.removeFromSuperview()
     }
     
     func showDimmingBackground() {
         UIView.animate(withDuration: 0.1) {
             self.dimmingView.alpha = 1
-            self.visualEffectView.alpha = 0
+//            self.visualEffectView.alpha = 0
         }
     }
     
     func showVisualEffectBackground() {
         UIView.animate(withDuration: 0.5) {
             self.dimmingView.alpha = 0
-            self.visualEffectView.alpha = 1
+//            self.visualEffectView.alpha = 1
         }
     }
     
     func adaptMaskTo(match cropRect: CGRect) {
         dimmingView.adaptMaskTo(match: cropRect)
-        visualEffectView.adaptMaskTo(match: cropRect)
+//        visualEffectView.adaptMaskTo(match: cropRect)
     }
 }

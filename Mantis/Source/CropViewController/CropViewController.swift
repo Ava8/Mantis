@@ -24,7 +24,7 @@
 
 import UIKit
 
-public protocol CropViewControllerProtocal: class {
+public protocol CropViewControllerProtocol: class {
     func didGetCroppedImage(image: UIImage)
 }
 
@@ -35,7 +35,7 @@ public enum CropViewControllerMode {
 
 public class CropViewController: UIViewController {
     
-    public weak var delegate: CropViewControllerProtocal?
+    public weak var delegate: CropViewControllerProtocol?
     
     private var orientation: UIInterfaceOrientation = .unknown
         
@@ -46,9 +46,18 @@ public class CropViewController: UIViewController {
     
     private var initialLayout = false
     
+    private var doneStr: String = ""
+    private var cancelStr: String = ""
+    private var resetStr: String = ""
+    private var originalSizeStr: String = ""
+    private var squareSizeStr: String = ""
+    
     public var image: UIImage?
     public var mode: CropViewControllerMode = .normal
     public var config = Mantis.Config()
+    
+    public var rotateImage: UIImage?
+    public var clampImage: UIImage?
     
     deinit {
         print("CropViewController deinit.")
@@ -80,9 +89,18 @@ public class CropViewController: UIViewController {
         cropToolbar?.selectedCrop = {[weak self] in self?.handleCrop() }
         
         if mode == .normal {
-            cropToolbar?.createToolbarUI()
+            cropToolbar?.createToolbarUI(rotateButtonImage: rotateImage,
+                                         clampButtonImage: clampImage,
+                                         doneStr: doneStr,
+                                         cancelStr: cancelStr,
+                                         resetStr: resetStr)
         } else {
-            cropToolbar?.createToolbarUI(mode: .simple)
+            cropToolbar?.createToolbarUI(mode: .simple,
+                                         rotateButtonImage: rotateImage,
+                                         clampButtonImage: clampImage,
+                                         doneStr: doneStr,
+                                         cancelStr: cancelStr,
+                                         resetStr: resetStr)
         }
     }
     
@@ -119,7 +137,19 @@ public class CropViewController: UIViewController {
     public override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         cropView?.prepareForDeviceRotation()
-    }    
+    }
+    
+    public func configureLocalizedStrings(doneStr: String,
+                                          cancelStr: String,
+                                          resetStr: String,
+                                          originalSizeStr: String,
+                                          squareSizeStr: String) {
+        self.doneStr = doneStr
+        self.cancelStr = cancelStr
+        self.resetStr = resetStr
+        self.originalSizeStr = originalSizeStr
+        self.squareSizeStr = squareSizeStr
+    }
     
     @objc func rotated() {
         let statusBarOrientation = UIApplication.shared.statusBarOrientation
@@ -205,7 +235,10 @@ public class CropViewController: UIViewController {
         ratioPresenter?.didGetRatio = { ratio in
             setFixedRatio(ratio)
         }
-        ratioPresenter?.present(by: self, in: cropToolbar!.setRatioButton!)
+        ratioPresenter?.present(by: self, in: cropToolbar!.setRatioButton!,
+                                cancelStr: cancelStr,
+                                originalSizeStr: originalSizeStr,
+                                squareSizeStr: squareSizeStr)
     }
 
     private func handleReset() {
@@ -242,10 +275,26 @@ extension CropViewController {
         cropToolbar.translatesAutoresizingMaskIntoConstraints = false
         cropView.translatesAutoresizingMaskIntoConstraints = false
         
-        stackView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        stackView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
-        stackView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
-        stackView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        if #available(iOS 11.0, *) {
+            stackView?.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        } else {
+            stackView?.topAnchor.constraint(equalTo: self.topLayoutGuide.topAnchor).isActive = true
+        }
+        if #available(iOS 11.0, *) {
+            stackView?.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        } else {
+            stackView?.bottomAnchor.constraint(equalTo: self.bottomLayoutGuide.bottomAnchor).isActive = true
+        }
+        if #available(iOS 11.0, *) {
+            stackView?.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor).isActive = true
+        } else {
+            stackView?.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        }
+        if #available(iOS 11.0, *) {
+            stackView?.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor).isActive = true
+        } else {
+            stackView?.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        }
     }
     
     fileprivate func setStackViewAxis() {

@@ -100,7 +100,7 @@ class CropView: UIView {
             viewModel.degrees = angle.degrees
             rotateScrollView()
         case .degree90Rotated:
-            cropMaskViewManager.showVisualEffectBackground()
+//            cropMaskViewManager.showVisualEffectBackground()
             gridOverlayView.isHidden = true
             rotationDial.isHidden = true
         case .touchImage:
@@ -120,7 +120,7 @@ class CropView: UIView {
             gridOverlayView.setGrid(hidden: true, animated: true)
             rotationDial.isHidden = false
             adaptAngleDashboardToCropBox()
-            cropMaskViewManager.showVisualEffectBackground()
+//            cropMaskViewManager.showVisualEffectBackground()
             checkImageStatusChanged()
         }
     }

@@ -22,7 +22,9 @@ class CropScrollView: UIScrollView {
         alwaysBounceVertical = true
         showsHorizontalScrollIndicator = false
         showsVerticalScrollIndicator = false
-        contentInsetAdjustmentBehavior = .never
+        if #available(iOS 11.0, *) {
+            contentInsetAdjustmentBehavior = .never
+        }
         minimumZoomScale = 1.0
         maximumZoomScale = 15.0
         clipsToBounds = false

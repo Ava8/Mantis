@@ -14,7 +14,6 @@
 		5F2E526C22FCA05600D9465E /* RatioOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F2E526B22FCA05600D9465E /* RatioOptions.swift */; };
 		5F3BE13A21993373005C4BD8 /* MantisLocalizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BE13C21993373005C4BD8 /* MantisLocalizable.strings */; };
 		5F3BE15E2199443C005C4BD8 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BE15C2199443C005C4BD8 /* README.md */; };
-		5F3BE15F2199443C005C4BD8 /* Mantis.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 5F3BE15D2199443C005C4BD8 /* Mantis.podspec */; };
 		5F3BE1F4219B22B1005C4BD8 /* LocalizedHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F3BE1F3219B22B1005C4BD8 /* LocalizedHelper.swift */; };
 		5FBA927222FCA4C4005E2D83 /* CropView+UIScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FBA927122FCA4C4005E2D83 /* CropView+UIScrollViewDelegate.swift */; };
 		5FC5634722983C490094652C /* RotationDialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC5634322983C490094652C /* RotationDialViewModel.swift */; };
@@ -42,7 +41,7 @@
 		5FEBA87B21952A330018DE62 /* CropMaskViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA85F21952A330018DE62 /* CropMaskViewManager.swift */; };
 		5FEBA87C21952A330018DE62 /* CropVisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA86121952A330018DE62 /* CropVisualEffectView.swift */; };
 		5FEBA87D21952A330018DE62 /* CropDimmingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA86221952A330018DE62 /* CropDimmingView.swift */; };
-		5FEBA87E21952A330018DE62 /* CropMaskProtocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA86321952A330018DE62 /* CropMaskProtocal.swift */; };
+		5FEBA87E21952A330018DE62 /* CropMaskProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA86321952A330018DE62 /* CropMaskProtocol.swift */; };
 		5FEBA88021952A330018DE62 /* GeometryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA86621952A330018DE62 /* GeometryHelper.swift */; };
 		5FEBA88D219730CD0018DE62 /* RotationDialPlate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA88C219730CD0018DE62 /* RotationDialPlate.swift */; };
 		5FEBA894219904590018DE62 /* RotationDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FEBA893219904590018DE62 /* RotationDial.swift */; };
@@ -108,7 +107,7 @@
 		5FEBA85F21952A330018DE62 /* CropMaskViewManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropMaskViewManager.swift; sourceTree = "<group>"; };
 		5FEBA86121952A330018DE62 /* CropVisualEffectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropVisualEffectView.swift; sourceTree = "<group>"; };
 		5FEBA86221952A330018DE62 /* CropDimmingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropDimmingView.swift; sourceTree = "<group>"; };
-		5FEBA86321952A330018DE62 /* CropMaskProtocal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropMaskProtocal.swift; sourceTree = "<group>"; };
+		5FEBA86321952A330018DE62 /* CropMaskProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CropMaskProtocol.swift; sourceTree = "<group>"; };
 		5FEBA86621952A330018DE62 /* GeometryHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeometryHelper.swift; sourceTree = "<group>"; };
 		5FEBA88C219730CD0018DE62 /* RotationDialPlate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationDialPlate.swift; sourceTree = "<group>"; };
 		5FEBA893219904590018DE62 /* RotationDial.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RotationDial.swift; sourceTree = "<group>"; };
@@ -256,7 +255,7 @@
 			children = (
 				5FEBA86121952A330018DE62 /* CropVisualEffectView.swift */,
 				5FEBA86221952A330018DE62 /* CropDimmingView.swift */,
-				5FEBA86321952A330018DE62 /* CropMaskProtocal.swift */,
+				5FEBA86321952A330018DE62 /* CropMaskProtocol.swift */,
 			);
 			path = MaskBackground;
 			sourceTree = "<group>";
@@ -376,7 +375,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F3BE15E2199443C005C4BD8 /* README.md in Resources */,
-				5F3BE15F2199443C005C4BD8 /* Mantis.podspec in Resources */,
 				5F3BE13A21993373005C4BD8 /* MantisLocalizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -424,7 +422,7 @@
 				5FC5635B229880CF0094652C /* CropView+Touches.swift in Sources */,
 				5FEBA86A21952A330018DE62 /* Mantis.swift in Sources */,
 				5FC5634A22983C490094652C /* RotationDial+Touches.swift in Sources */,
-				5FEBA87E21952A330018DE62 /* CropMaskProtocal.swift in Sources */,
+				5FEBA87E21952A330018DE62 /* CropMaskProtocol.swift in Sources */,
 				5F3BE1F4219B22B1005C4BD8 /* LocalizedHelper.swift in Sources */,
 				5FEBA86F21952A330018DE62 /* CropViewController.swift in Sources */,
 				5FEBA87821952A330018DE62 /* CropOverlayView.swift in Sources */,
@@ -604,13 +602,13 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 3V26Q55U3S;
+				DEVELOPMENT_TEAM = RN5J25X5C5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Mantis/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -630,13 +628,13 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 3V26Q55U3S;
+				DEVELOPMENT_TEAM = RN5J25X5C5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = Mantis/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
