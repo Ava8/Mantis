@@ -35,20 +35,25 @@ The rotation dial is inspired by [10clock](https://github.com/joedaniels29/10Clo
 ### CocoaPods
 
 ```ruby
-pod 'Mantis', '~> 0.28'
+pod 'Mantis', '~> 0.32'
 ```
 ## Usage
 
 * Create a cropViewController in Mantis with default config and default mode
 
+**You need set (cropViewController or its navigation controller).modalPresentationStyle = .fullscreen for iOS 13 when the cropViewController is presented**
+
 ```swift
 let cropViewController = Mantis.cropViewController(image: <Your Image>)
 ```
 
-* The caller needs to conform CropViewControllerProtocol
+* The caller needs to conform CropViewControllerDelegate
 ```swift
-public protocol CropViewControllerProtocol: class {
-    func didGetCroppedImage(image: UIImage)
+public protocol CropViewControllerDelegate: class {
+    func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage)
+    func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) // optional
+    func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage) // optional
+    func cropViewControllerWillDismiss(_ cropViewController: CropViewController) // optional
 }
 ```
 
@@ -62,7 +67,7 @@ public protocol CropViewControllerProtocol: class {
 </p>
 
 ```swift
-let cropViewController = Mantis.cropViewController(image: <Your Image>, mode = .normal)
+let cropViewController = Mantis.cropViewController(image: <Your Image>)
 ```
 
   * customizable mode
@@ -74,28 +79,33 @@ let cropViewController = Mantis.cropViewController(image: <Your Image>, mode = .
 </p>
 
 ```swift
-let cropViewController = Mantis.cropViewController(image: <Your Image>, mode = .customizable)
+let cropViewController = Mantis.cropCustomizableViewController(image: <Your Image>)
 ```
 
 * Add your own ratio
 ```swift
             // Add a custom ratio 1:2 for portrait orientation
-            let config = MantisConfig()
+            let config = Mantis.Config()
             config.addCustomRatio(byVerticalWidth: 1, andVerticalHeight: 2)            
             <Your ViewController> = Mantis.cropViewController(image: <Your Image>, config: config)
             
             // Set the ratioOptions of the config if you don't want to keep all default ratios
-            let config = MantisConfig() 
+            let config = Mantis.Config() 
             //config.ratioOptions = [.original, .square, .custom]
             config.ratioOptions = [.custom]
             config.addCustomRatio(byVerticalWidth: 1, andVerticalHeight: 2)            
             <Your ViewController> = Mantis.cropViewController(image: <Your Image>, config: config)
 ```
 
+* If you always want to use only one fixed ratio, set Mantis.Config.alwaysUsingOnePresetFixedRatio = true
+
+The fixed-ratio setting button does not show when alwaysUsingOnePresetFixedRatio is true
+
+
 ### Demo code
 
 ```swift
-        let cropViewController = Mantis.cropViewController(image: <Your Image>, mode: .normal)
+        let cropViewController = Mantis.cropViewController(image: <Your Image>)
         cropViewController.delegate = self
         <Your ViewController>.present(cropViewController, animated: true)
 ```

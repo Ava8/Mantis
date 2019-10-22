@@ -58,7 +58,7 @@ class CropToolbar: UIView {
     
     private func createRotationButton(with image: UIImage?) {
         anticlockRotateButton = createOptionButton(withTitle: nil, andAction: #selector(rotate))
-        anticlockRotateButton?.setImage(ToolBarButtonImageBuilder.rotateCCWImage(with: image), for: .normal)
+        anticlockRotateButton?.setImage(ToolBarButtonImageBuilder.rotateCCWImage(), for: .normal)
     }
     
     private func createResetButton(with image: UIImage? = nil, with resetStr: String) {
@@ -74,7 +74,7 @@ class CropToolbar: UIView {
     
     private func createSetRatioButton(with image: UIImage?) {
         setRatioButton = createOptionButton(withTitle: nil, andAction: #selector(setRatio))
-        setRatioButton?.setImage(ToolBarButtonImageBuilder.clampImage(with: image), for: .normal)
+        setRatioButton?.setImage(ToolBarButtonImageBuilder.clampImage(), for: .normal)
     }
     
     private func createCropButton(with doneStr: String) {

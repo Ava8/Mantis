@@ -29,11 +29,7 @@
 import UIKit
 
 struct ToolBarButtonImageBuilder {
-    static func rotateCCWImage(with customImage: UIImage?) -> UIImage? {
-        
-        if customImage != nil {
-            return customImage
-        }
+    static func rotateCCWImage() -> UIImage? {
         
         var rotateImage: UIImage? = nil
 
@@ -69,13 +65,8 @@ struct ToolBarButtonImageBuilder {
         return rotateImage
     }
     
-    static func rotateCWImage(with customImage: UIImage?) -> UIImage? {
-        
-        if customImage != nil {
-            return customImage
-        }
-        
-        guard let rotateCCWImage = self.rotateCCWImage(with: nil), let cgImage = rotateCCWImage.cgImage else { return nil }
+    static func rotateCWImage() -> UIImage? {
+        guard let rotateCCWImage = self.rotateCCWImage(), let cgImage = rotateCCWImage.cgImage else { return nil }
         
         UIGraphicsBeginImageContextWithOptions(rotateCCWImage.size, false,  rotateCCWImage.scale )
         let context = UIGraphicsGetCurrentContext()
@@ -87,11 +78,7 @@ struct ToolBarButtonImageBuilder {
         return rotateCWImage
     }
     
-    static func clampImage(with customImage: UIImage?) -> UIImage? {
-        
-        if customImage != nil {
-            return customImage
-        }
+    static func clampImage() -> UIImage? {
         
         var clampImage: UIImage? = nil
 
